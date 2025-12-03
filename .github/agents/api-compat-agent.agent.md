@@ -3,12 +3,7 @@ name: api-compat-agent
 description: Ensures 100% API compatibility via route diffing and snapshot tests.
 target: github-copilot
 tools: ["*"]
-mcp-servers:
-  shadcn:
-    type: local
-    command: "npx"
-    args: ["shadcn@latest", "mcp"]
-    tools: ["*"]
+
 metadata:
   role: api-compat
 ---

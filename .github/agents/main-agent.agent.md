@@ -7,7 +7,7 @@ mcp-servers:
   shadcn:
     type: local
     command: "npx"
-    args: ["shadcn@latest", "mcp"]
+    args: ["shadcn-ui@latest", "mcp"]
     tools: ["*"]
 metadata:
   role: coordinator

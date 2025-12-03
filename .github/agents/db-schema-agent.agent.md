@@ -3,12 +3,7 @@ name: db-schema-agent
 description: Infers DB schema from legacy PHP code and produces a Rust-ready SQL schema.
 target: github-copilot
 tools: ["*"]
-mcp-servers:
-  shadcn:
-    type: local
-    command: "npx"
-    args: ["shadcn@latest", "mcp"]
-    tools: ["*"]
+
 metadata:
   role: db-schema
 ---

@@ -7,7 +7,7 @@ mcp-servers:
   shadcn:
     type: local
     command: "npx"
-    args: ["shadcn@latest", "mcp"]
+    args: ["shadcn-ui@latest", "mcp"]
     tools: ["*"]
 metadata:
   role: react-frontend
@@ -26,8 +26,8 @@ Choose:
 - Tailwind CSS
 - **shadcn/ui**, integrated through the **shadcn MCP server**
 - Generate components using official patterns:
-  - commands such as: `shadcn-ui component add button input card ...`
-  - verify via documentation: https://ui.shadcn.com/docs/mcp
+  - commands such as: `shadcn-ui add button input card ...`
+  - verify via documentation: https://ui.shadcn.com/docs
 
 ### 3. Implement frontend pages
 - replicate the PHP frontend behavior (if any)
