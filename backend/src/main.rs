@@ -16,9 +16,7 @@ async fn main() {
 
     // Bind to 0.0.0.0:3000 by default. Adjust as necessary.
     let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
+    let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
     println!("Backend running on http://{addr}");
-    axum::Server::bind(&addr)
-        .serve(app.into_make_service())
-        .await
-        .unwrap();
+    axum::serve(listener, app).await.unwrap();
 }
