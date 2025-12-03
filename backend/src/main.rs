@@ -20,5 +20,5 @@ async fn main() {
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
         .await
-        .expect("Failed to start server");
+        .expect(&format!("Failed to bind server to {}", addr));
 }
