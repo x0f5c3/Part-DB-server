@@ -3,12 +3,7 @@ name: rust-backend-agent
 description: Builds the Rust Axum backend with SQLX, migrations, API routes, and tests.
 target: github-copilot
 tools: ["*"]
-mcp-servers:
-  shadcn:
-    type: local
-    command: "npx"
-    args: ["shadcn@latest", "mcp"]
-    tools: ["*"]
+
 metadata:
   role: rust-backend
 ---
