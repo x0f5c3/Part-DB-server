@@ -585,9 +585,10 @@ pub async fn list_users(
 ) -> AppResult<Json<PaginatedResponse<User>>> {
     let offset = (params.page - 1) * params.per_page;
     
+    // Note: We use NULL as password to avoid exposing sensitive data
     let users = sqlx::query_as::<_, User>(
         r#"
-        SELECT id, name, first_name, last_name, email, password, disabled,
+        SELECT id, name, first_name, last_name, email, NULL as password, disabled,
                config_theme, datetime_added, last_modified
         FROM users
         ORDER BY name
@@ -616,9 +617,10 @@ pub async fn get_user(
     State(state): State<AppState>,
     Path(id): Path<i32>,
 ) -> AppResult<Json<User>> {
+    // Note: We use NULL as password to avoid exposing sensitive data
     let user = sqlx::query_as::<_, User>(
         r#"
-        SELECT id, name, first_name, last_name, email, password, disabled,
+        SELECT id, name, first_name, last_name, email, NULL as password, disabled,
                config_theme, datetime_added, last_modified
         FROM users
         WHERE id = $1

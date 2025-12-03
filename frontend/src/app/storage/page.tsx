@@ -9,21 +9,21 @@ const placeholderLocations = [
     name: "Lab Bench A",
     description: "Main workbench storage",
     partCount: 125,
-    subllocations: ["Drawer 1", "Drawer 2", "Bin A"],
+    sublocations: ["Drawer 1", "Drawer 2", "Bin A"],
   },
   {
     id: 2,
     name: "Component Cabinet",
     description: "SMD components storage",
     partCount: 450,
-    subllocations: ["Shelf 1", "Shelf 2", "Shelf 3"],
+    sublocations: ["Shelf 1", "Shelf 2", "Shelf 3"],
   },
   {
     id: 3,
     name: "Project Box",
     description: "Active project components",
     partCount: 35,
-    subllocations: ["Current", "Pending"],
+    sublocations: ["Current", "Pending"],
   },
 ];
 
@@ -82,7 +82,7 @@ export default function StoragePage() {
                     {location.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    {location.subllocations.map((sub) => (
+                    {location.sublocations.map((sub) => (
                       <span
                         key={sub}
                         className="px-2 py-1 text-xs rounded-full bg-secondary text-secondary-foreground"
