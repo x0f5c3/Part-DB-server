@@ -145,9 +145,7 @@ impl IntoResponse for AppError {
 impl From<sqlx::Error> for AppError {
     fn from(err: sqlx::Error) -> Self {
         match &err {
-            sqlx::Error::RowNotFound => {
-                AppError::NotFound("Resource not found".to_string())
-            }
+            sqlx::Error::RowNotFound => AppError::NotFound("Resource not found".to_string()),
             _ => AppError::Database(err),
         }
     }

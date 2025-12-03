@@ -16,10 +16,10 @@ async fn test_health_endpoint() {
 async fn test_api_info_structure() {
     // Verify the API info JSON structure matches expectations
     let expected_fields = vec!["name", "version", "description"];
-    
+
     let json_str = r#"{"name":"Part-DB API","version":"2.0.0","description":"REST API for Part-DB inventory management"}"#;
     let value: serde_json::Value = serde_json::from_str(json_str).unwrap();
-    
+
     for field in expected_fields {
         assert!(value.get(field).is_some(), "Missing field: {}", field);
     }
@@ -28,11 +28,11 @@ async fn test_api_info_structure() {
 #[tokio::test]
 async fn test_pagination_params_defaults() {
     use backend::models::PaginationParams;
-    
+
     // Test deserialization with defaults
     let json_str = "{}";
     let params: PaginationParams = serde_json::from_str(json_str).unwrap();
-    
+
     assert_eq!(params.page, 1);
     assert_eq!(params.per_page, 30);
 }
@@ -40,10 +40,10 @@ async fn test_pagination_params_defaults() {
 #[tokio::test]
 async fn test_pagination_params_custom() {
     use backend::models::PaginationParams;
-    
+
     let json_str = r#"{"page": 5, "per_page": 50}"#;
     let params: PaginationParams = serde_json::from_str(json_str).unwrap();
-    
+
     assert_eq!(params.page, 5);
     assert_eq!(params.per_page, 50);
 }
@@ -51,14 +51,9 @@ async fn test_pagination_params_custom() {
 #[tokio::test]
 async fn test_paginated_response_calculation() {
     use backend::models::PaginatedResponse;
-    
-    let response: PaginatedResponse<i32> = PaginatedResponse::new(
-        vec![1, 2, 3, 4, 5],
-        100,
-        1,
-        10,
-    );
-    
+
+    let response: PaginatedResponse<i32> = PaginatedResponse::new(vec![1, 2, 3, 4, 5], 100, 1, 10);
+
     assert_eq!(response.total, 100);
     assert_eq!(response.page, 1);
     assert_eq!(response.per_page, 10);
@@ -69,7 +64,7 @@ async fn test_paginated_response_calculation() {
 #[tokio::test]
 async fn test_part_serialization() {
     use backend::models::Part;
-    
+
     // Test that Part can be serialized to JSON
     let part_json = r#"{
         "id": 1,
@@ -91,7 +86,7 @@ async fn test_part_serialization() {
         "datetime_added": null,
         "last_modified": null
     }"#;
-    
+
     let part: Part = serde_json::from_str(part_json).unwrap();
     assert_eq!(part.id, 1);
     assert_eq!(part.name, "Test Part");
@@ -102,7 +97,7 @@ async fn test_part_serialization() {
 #[tokio::test]
 async fn test_category_serialization() {
     use backend::models::Category;
-    
+
     let category_json = r#"{
         "id": 1,
         "name": "Resistors",
@@ -119,7 +114,7 @@ async fn test_category_serialization() {
         "datetime_added": null,
         "last_modified": null
     }"#;
-    
+
     let category: Category = serde_json::from_str(category_json).unwrap();
     assert_eq!(category.id, 1);
     assert_eq!(category.name, "Resistors");
@@ -129,12 +124,12 @@ async fn test_category_serialization() {
 #[tokio::test]
 async fn test_create_part_dto() {
     use backend::models::CreatePart;
-    
+
     let dto_json = r#"{
         "name": "New Part",
         "category_id": 1
     }"#;
-    
+
     let dto: CreatePart = serde_json::from_str(dto_json).unwrap();
     assert_eq!(dto.name, "New Part");
     assert_eq!(dto.category_id, 1);
@@ -145,12 +140,12 @@ async fn test_create_part_dto() {
 #[tokio::test]
 async fn test_update_part_dto() {
     use backend::models::UpdatePart;
-    
+
     let dto_json = r#"{
         "name": "Updated Part",
         "favorite": true
     }"#;
-    
+
     let dto: UpdatePart = serde_json::from_str(dto_json).unwrap();
     assert_eq!(dto.name, Some("Updated Part".to_string()));
     assert_eq!(dto.favorite, Some(true));

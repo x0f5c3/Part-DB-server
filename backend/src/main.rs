@@ -3,8 +3,8 @@
 //! This is the main entry point for the Part-DB Rust backend server.
 //! It provides a REST API compatible with the original PHP application.
 
-use axum::{routing::get, Router};
 use anyhow::Result;
+use axum::{routing::get, Router};
 use std::env;
 use tower_http::cors::{Any, CorsLayer};
 use tower_http::trace::TraceLayer;
@@ -87,10 +87,10 @@ async fn main() -> Result<()> {
 
     // Create database connection pool
     let db_config = DbConfig::from_env()?;
-    
+
     // Check if we should skip database connection (for basic health checks)
     let skip_db = env::var("SKIP_DB").is_ok();
-    
+
     let app = if skip_db {
         // Create a minimal router without database
         println!("Starting in no-database mode (health check only)");
@@ -101,7 +101,7 @@ async fn main() -> Result<()> {
         println!("Connecting to database...");
         let pool = db::create_pool(&db_config).await?;
         println!("Database connection established");
-        
+
         let state = AppState::new(pool);
         create_router(state)
     };
@@ -110,6 +110,6 @@ async fn main() -> Result<()> {
     println!("Part-DB Backend starting on http://{}", addr);
     let listener = tokio::net::TcpListener::bind(&addr).await?;
     axum::serve(listener, app).await?;
-    
+
     Ok(())
 }

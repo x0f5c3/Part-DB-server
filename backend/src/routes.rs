@@ -48,7 +48,7 @@ pub async fn list_parts(
     Query(params): Query<PaginationParams>,
 ) -> AppResult<Json<PaginatedResponse<Part>>> {
     let offset = (params.page - 1) * params.per_page;
-    
+
     let parts = sqlx::query_as::<_, Part>(
         r#"
         SELECT id, name, description, comment, visible, favorite,
@@ -78,10 +78,7 @@ pub async fn list_parts(
 }
 
 /// Get a single part by ID.
-pub async fn get_part(
-    State(state): State<AppState>,
-    Path(id): Path<i32>,
-) -> AppResult<Json<Part>> {
+pub async fn get_part(State(state): State<AppState>, Path(id): Path<i32>) -> AppResult<Json<Part>> {
     let part = sqlx::query_as::<_, Part>(
         r#"
         SELECT id, name, description, comment, visible, favorite,
@@ -107,7 +104,7 @@ pub async fn create_part(
 ) -> AppResult<(StatusCode, Json<Part>)> {
     let description = payload.description.unwrap_or_default();
     let comment = payload.comment.unwrap_or_default();
-    
+
     let part = sqlx::query_as::<_, Part>(
         r#"
         INSERT INTO parts (name, description, comment, id_category, id_footprint, id_manufacturer,
@@ -139,13 +136,11 @@ pub async fn update_part(
     Json(payload): Json<UpdatePart>,
 ) -> AppResult<Json<Part>> {
     // First check if the part exists
-    let existing = sqlx::query_as::<_, Part>(
-        "SELECT * FROM parts WHERE id = $1"
-    )
-    .bind(id)
-    .fetch_optional(&state.pool)
-    .await?
-    .ok_or_else(|| AppError::NotFound(format!("Part with id {} not found", id)))?;
+    let existing = sqlx::query_as::<_, Part>("SELECT * FROM parts WHERE id = $1")
+        .bind(id)
+        .fetch_optional(&state.pool)
+        .await?
+        .ok_or_else(|| AppError::NotFound(format!("Part with id {} not found", id)))?;
 
     let name = payload.name.unwrap_or(existing.name);
     let description = payload.description.unwrap_or(existing.description);
@@ -208,7 +203,7 @@ pub async fn list_categories(
     Query(params): Query<PaginationParams>,
 ) -> AppResult<Json<PaginatedResponse<Category>>> {
     let offset = (params.page - 1) * params.per_page;
-    
+
     let categories = sqlx::query_as::<_, Category>(
         r#"
         SELECT id, name, parent_id, comment, partname_hint, partname_regex,
@@ -266,7 +261,7 @@ pub async fn create_category(
     Json(payload): Json<CreateCategory>,
 ) -> AppResult<(StatusCode, Json<Category>)> {
     let comment = payload.comment.unwrap_or_default();
-    
+
     let category = sqlx::query_as::<_, Category>(
         r#"
         INSERT INTO categories (name, parent_id, comment, partname_hint, partname_regex,
@@ -296,13 +291,11 @@ pub async fn update_category(
     Json(payload): Json<UpdateCategory>,
 ) -> AppResult<Json<Category>> {
     // First check if the category exists
-    let existing = sqlx::query_as::<_, Category>(
-        "SELECT * FROM categories WHERE id = $1"
-    )
-    .bind(id)
-    .fetch_optional(&state.pool)
-    .await?
-    .ok_or_else(|| AppError::NotFound(format!("Category with id {} not found", id)))?;
+    let existing = sqlx::query_as::<_, Category>("SELECT * FROM categories WHERE id = $1")
+        .bind(id)
+        .fetch_optional(&state.pool)
+        .await?
+        .ok_or_else(|| AppError::NotFound(format!("Category with id {} not found", id)))?;
 
     let name = payload.name.unwrap_or(existing.name);
     let parent_id = payload.parent_id.or(existing.parent_id);
@@ -340,7 +333,10 @@ pub async fn delete_category(
         .await?;
 
     if result.rows_affected() == 0 {
-        return Err(AppError::NotFound(format!("Category with id {} not found", id)));
+        return Err(AppError::NotFound(format!(
+            "Category with id {} not found",
+            id
+        )));
     }
 
     Ok(StatusCode::NO_CONTENT)
@@ -356,7 +352,7 @@ pub async fn list_footprints(
     Query(params): Query<PaginationParams>,
 ) -> AppResult<Json<PaginatedResponse<Footprint>>> {
     let offset = (params.page - 1) * params.per_page;
-    
+
     let footprints = sqlx::query_as::<_, Footprint>(
         r#"
         SELECT id, name, parent_id, comment, datetime_added, last_modified
@@ -412,7 +408,7 @@ pub async fn list_manufacturers(
     Query(params): Query<PaginationParams>,
 ) -> AppResult<Json<PaginatedResponse<Manufacturer>>> {
     let offset = (params.page - 1) * params.per_page;
-    
+
     let manufacturers = sqlx::query_as::<_, Manufacturer>(
         r#"
         SELECT id, name, parent_id, comment, address, phone_number, fax_number,
@@ -470,7 +466,7 @@ pub async fn list_storage_locations(
     Query(params): Query<PaginationParams>,
 ) -> AppResult<Json<PaginatedResponse<StorageLocation>>> {
     let offset = (params.page - 1) * params.per_page;
-    
+
     let locations = sqlx::query_as::<_, StorageLocation>(
         r#"
         SELECT id, name, parent_id, comment, is_full, datetime_added, last_modified
@@ -526,7 +522,7 @@ pub async fn list_suppliers(
     Query(params): Query<PaginationParams>,
 ) -> AppResult<Json<PaginatedResponse<Supplier>>> {
     let offset = (params.page - 1) * params.per_page;
-    
+
     let suppliers = sqlx::query_as::<_, Supplier>(
         r#"
         SELECT id, name, parent_id, comment, address, phone_number, fax_number,
@@ -584,7 +580,7 @@ pub async fn list_users(
     Query(params): Query<PaginationParams>,
 ) -> AppResult<Json<PaginatedResponse<User>>> {
     let offset = (params.page - 1) * params.per_page;
-    
+
     // Note: We use NULL as password to avoid exposing sensitive data
     let users = sqlx::query_as::<_, User>(
         r#"
@@ -613,10 +609,7 @@ pub async fn list_users(
 }
 
 /// Get a single user by ID.
-pub async fn get_user(
-    State(state): State<AppState>,
-    Path(id): Path<i32>,
-) -> AppResult<Json<User>> {
+pub async fn get_user(State(state): State<AppState>, Path(id): Path<i32>) -> AppResult<Json<User>> {
     // Note: We use NULL as password to avoid exposing sensitive data
     let user = sqlx::query_as::<_, User>(
         r#"
