@@ -51,3 +51,7 @@ phpstan.neon
 
 .claude/
 CLAUDE.md
+
+###> rust/cargo ###
+/backend/target/
+###< rust/cargo ###
