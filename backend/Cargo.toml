@@ -8,6 +8,7 @@ license = "AGPL-3.0-or-later"
 [dependencies]
 # Web framework
 axum = { version = "0.8.7", features = ["macros"] }
+axum-extra = { version = "0.10", features = ["typed-header"] }
 tokio = { version = "1", features = ["full"] }
 
 # Database
@@ -22,17 +23,28 @@ serde_json = "1.0"
 
 # Error handling
 anyhow = "1.0.100"
+thiserror = "2.0"
 
 # Date/time handling
 chrono = { version = "0.4", features = ["serde"] }
 
 # HTTP utilities
 tower-http = { version = "0.6", features = ["cors", "trace"] }
+tower = { version = "0.5", features = ["full"] }
 
 # Logging
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
+# Authentication
+jsonwebtoken = "9.3"
+bcrypt = "0.16"
+
+# OpenAPI documentation
+utoipa = { version = "5", features = ["axum_extras", "chrono"] }
+
 [dev-dependencies]
 # Testing utilities
 tokio-test = "0.4"
+insta = { version = "1.40", features = ["json"] }
+axum-test = "16"

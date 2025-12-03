@@ -4,17 +4,26 @@
 //! It provides a REST API compatible with the original PHP application.
 
 use anyhow::Result;
-use axum::{routing::get, Router};
+use axum::{middleware, routing::get, routing::post, Json, Router};
 use std::env;
 use tower_http::cors::{Any, CorsLayer};
 use tower_http::trace::TraceLayer;
+use utoipa::OpenApi;
 
+mod auth;
 mod db;
 mod error;
 mod models;
+mod openapi;
 mod routes;
 
 use db::{AppState, DbConfig};
+use openapi::ApiDoc;
+
+/// Serves the OpenAPI JSON specification.
+async fn openapi_json() -> Json<utoipa::openapi::OpenApi> {
+    Json(ApiDoc::openapi())
+}
 
 /// Creates the application router with all routes.
 fn create_router(state: AppState) -> Router {
@@ -24,10 +33,17 @@ fn create_router(state: AppState) -> Router {
         .allow_methods(Any)
         .allow_headers(Any);
 
-    // API routes under /api prefix (matching the PHP API structure)
-    let api_routes = Router::new()
+    // Public API routes (no authentication required)
+    let public_routes = Router::new()
         // API info
         .route("/", get(routes::api_info))
+        // Authentication
+        .route("/auth/login", post(auth::login));
+
+    // Protected API routes (authentication required)
+    let protected_routes = Router::new()
+        // Current user
+        .route("/auth/me", get(auth::get_current_user))
         // Parts
         .route("/parts", get(routes::list_parts).post(routes::create_part))
         .route(
@@ -61,11 +77,19 @@ fn create_router(state: AppState) -> Router {
         .route("/suppliers/{id}", get(routes::get_supplier))
         // Users
         .route("/users", get(routes::list_users))
-        .route("/users/{id}", get(routes::get_user));
+        .route("/users/{id}", get(routes::get_user))
+        .layer(middleware::from_fn_with_state(
+            state.clone(),
+            auth::auth_middleware,
+        ));
 
-    // Main router
+    // Combine API routes
+    let api_routes = Router::new().merge(public_routes).merge(protected_routes);
+
+    // Main router with OpenAPI documentation
     Router::new()
         .route("/health", get(routes::health_check))
+        .route("/api-docs/openapi.json", get(openapi_json))
         .nest("/api", api_routes)
         .layer(cors)
         .layer(TraceLayer::new_for_http())
@@ -97,6 +121,7 @@ async fn main() -> Result<()> {
         Router::new()
             .route("/health", get(routes::health_check))
             .route("/api", get(routes::api_info))
+            .route("/api-docs/openapi.json", get(openapi_json))
     } else {
         println!("Connecting to database...");
         let pool = db::create_pool(&db_config).await?;
@@ -108,6 +133,10 @@ async fn main() -> Result<()> {
 
     // Start the server
     println!("Part-DB Backend starting on http://{}", addr);
+    println!(
+        "OpenAPI documentation available at http://{}/api-docs/openapi.json",
+        addr
+    );
     let listener = tokio::net::TcpListener::bind(&addr).await?;
     axum::serve(listener, app).await?;
 

@@ -1,0 +1,24 @@
+---
+source: backend/tests/snapshot_tests.rs
+expression: part
+---
+{
+  "comment": "Common pull-up resistor",
+  "datetime_added": "2024-01-15T10:30:00Z",
+  "description": "10k Ohm 1/4W resistor",
+  "favorite": false,
+  "id": 1,
+  "id_category": 5,
+  "id_footprint": 12,
+  "id_manufacturer": 3,
+  "ipn": "R-10K-025W",
+  "last_modified": "2024-01-20T14:45:00Z",
+  "manufacturer_product_number": "RC0402FR-0710KL",
+  "manufacturer_product_url": "https://example.com/product",
+  "mass": 0.1,
+  "minamount": 100.0,
+  "name": "Test Resistor",
+  "needs_review": false,
+  "tags": "resistor,passive",
+  "visible": true
+}

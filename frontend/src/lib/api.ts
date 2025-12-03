@@ -21,6 +21,9 @@ import type {
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
 
+// Re-export types for convenience
+export type { CreatePart, UpdatePart, CreateCategory, UpdateCategory };
+
 /**
  * Custom error class for API errors.
  */
@@ -36,20 +39,46 @@ export class ApiError extends Error {
 }
 
 /**
- * Fetch wrapper with error handling.
+ * Get the auth token from localStorage.
+ */
+function getAuthToken(): string | null {
+  if (typeof window === "undefined") return null;
+  const stored = localStorage.getItem("partdb-auth");
+  if (!stored) return null;
+  try {
+    const parsed = JSON.parse(stored);
+    return parsed.state?.token || null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Fetch wrapper with error handling and authentication.
  */
 async function fetchApi<T>(
   endpoint: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  requiresAuth: boolean = true
 ): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
 
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    ...(options.headers as Record<string, string>),
+  };
+
+  // Add auth token if available and required
+  if (requiresAuth) {
+    const token = getAuthToken();
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+  }
+
   const response = await fetch(url, {
     ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
+    headers,
   });
 
   if (!response.ok) {
@@ -81,6 +110,48 @@ function buildQueryString(params: PaginationParams): string {
 }
 
 // ============================================================================
+// Authentication
+// ============================================================================
+
+/**
+ * Login request payload.
+ */
+export interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+/**
+ * Login response with JWT token.
+ */
+export interface LoginResponse {
+  token: string;
+  token_type: string;
+  expires_in: number;
+}
+
+/**
+ * Login with username and password.
+ */
+export async function login(credentials: LoginRequest): Promise<LoginResponse> {
+  return fetchApi<LoginResponse>(
+    "/auth/login",
+    {
+      method: "POST",
+      body: JSON.stringify(credentials),
+    },
+    false
+  );
+}
+
+/**
+ * Get current user info.
+ */
+export async function getCurrentUser(): Promise<User> {
+  return fetchApi<User>("/auth/me");
+}
+
+// ============================================================================
 // API Info
 // ============================================================================
 
@@ -88,7 +159,7 @@ function buildQueryString(params: PaginationParams): string {
  * Get API information.
  */
 export async function getApiInfo(): Promise<ApiInfo> {
-  return fetchApi<ApiInfo>("/");
+  return fetchApi<ApiInfo>("/", {}, false);
 }
 
 // ============================================================================

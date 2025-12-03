@@ -6,10 +6,11 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use sqlx::FromRow;
+use utoipa::ToSchema;
 
 /// Represents a category that parts can belong to.
 /// Categories are hierarchical and can have parent categories.
-#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow, ToSchema)]
 pub struct Category {
     /// Unique identifier for the category
     pub id: i32,
@@ -42,7 +43,7 @@ pub struct Category {
 }
 
 /// Represents a footprint for electronic components.
-#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow, ToSchema)]
 pub struct Footprint {
     /// Unique identifier for the footprint
     pub id: i32,
@@ -59,7 +60,7 @@ pub struct Footprint {
 }
 
 /// Represents a manufacturer of electronic parts.
-#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow, ToSchema)]
 pub struct Manufacturer {
     /// Unique identifier for the manufacturer
     pub id: i32,
@@ -86,7 +87,7 @@ pub struct Manufacturer {
 }
 
 /// Represents a storage location where parts are stored.
-#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow, ToSchema)]
 pub struct StorageLocation {
     /// Unique identifier for the storage location
     pub id: i32,
@@ -105,7 +106,7 @@ pub struct StorageLocation {
 }
 
 /// Represents a supplier that sells parts.
-#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow, ToSchema)]
 pub struct Supplier {
     /// Unique identifier for the supplier
     pub id: i32,
@@ -134,7 +135,7 @@ pub struct Supplier {
 }
 
 /// Represents an electronic part in the inventory.
-#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow, ToSchema)]
 pub struct Part {
     /// Unique identifier for the part
     pub id: i32,
@@ -175,7 +176,7 @@ pub struct Part {
 }
 
 /// Represents a lot of parts at a specific storage location.
-#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow, ToSchema)]
 #[allow(dead_code)]
 pub struct PartLot {
     /// Unique identifier for the lot
@@ -203,7 +204,7 @@ pub struct PartLot {
 }
 
 /// Represents a user in the system.
-#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow, ToSchema)]
 pub struct User {
     /// Unique identifier for the user
     pub id: i32,
@@ -230,7 +231,7 @@ pub struct User {
 }
 
 /// DTO for creating a new part.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, ToSchema)]
 pub struct CreatePart {
     /// Name of the part
     pub name: String,
@@ -247,7 +248,7 @@ pub struct CreatePart {
 }
 
 /// DTO for updating a part.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, ToSchema)]
 pub struct UpdatePart {
     /// Name of the part (optional update)
     pub name: Option<String>,
@@ -266,7 +267,7 @@ pub struct UpdatePart {
 }
 
 /// DTO for creating a new category.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, ToSchema)]
 pub struct CreateCategory {
     /// Name of the category
     pub name: String,
@@ -277,7 +278,7 @@ pub struct CreateCategory {
 }
 
 /// DTO for updating a category.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, ToSchema)]
 pub struct UpdateCategory {
     /// Name of the category (optional update)
     pub name: Option<String>,
@@ -288,7 +289,7 @@ pub struct UpdateCategory {
 }
 
 /// Pagination parameters for list queries.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, ToSchema, utoipa::IntoParams)]
 pub struct PaginationParams {
     /// Page number (1-indexed)
     #[serde(default = "default_page")]
@@ -307,7 +308,7 @@ fn default_per_page() -> i32 {
 }
 
 /// Paginated response wrapper.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, ToSchema)]
 pub struct PaginatedResponse<T> {
     /// The items on the current page
     pub items: Vec<T>,

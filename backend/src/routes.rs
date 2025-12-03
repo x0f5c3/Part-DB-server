@@ -23,6 +23,14 @@ use crate::models::{
 /// Health check endpoint.
 ///
 /// Returns "OK" if the service is running.
+#[utoipa::path(
+    get,
+    path = "/health",
+    tag = "health",
+    responses(
+        (status = 200, description = "Service is healthy", body = String)
+    )
+)]
 pub async fn health_check() -> &'static str {
     "OK"
 }
@@ -30,6 +38,14 @@ pub async fn health_check() -> &'static str {
 /// API info endpoint.
 ///
 /// Returns basic information about the API.
+#[utoipa::path(
+    get,
+    path = "/api",
+    tag = "health",
+    responses(
+        (status = 200, description = "API information", body = serde_json::Value)
+    )
+)]
 pub async fn api_info() -> Json<serde_json::Value> {
     Json(serde_json::json!({
         "name": "Part-DB API",
@@ -43,6 +59,15 @@ pub async fn api_info() -> Json<serde_json::Value> {
 // ============================================================================
 
 /// List all parts with pagination.
+#[utoipa::path(
+    get,
+    path = "/api/parts",
+    tag = "parts",
+    params(PaginationParams),
+    responses(
+        (status = 200, description = "List of parts", body = PaginatedResponse<Part>)
+    )
+)]
 pub async fn list_parts(
     State(state): State<AppState>,
     Query(params): Query<PaginationParams>,
@@ -78,6 +103,18 @@ pub async fn list_parts(
 }
 
 /// Get a single part by ID.
+#[utoipa::path(
+    get,
+    path = "/api/parts/{id}",
+    tag = "parts",
+    params(
+        ("id" = i32, Path, description = "Part ID")
+    ),
+    responses(
+        (status = 200, description = "Part details", body = Part),
+        (status = 404, description = "Part not found")
+    )
+)]
 pub async fn get_part(State(state): State<AppState>, Path(id): Path<i32>) -> AppResult<Json<Part>> {
     let part = sqlx::query_as::<_, Part>(
         r#"
@@ -98,6 +135,16 @@ pub async fn get_part(State(state): State<AppState>, Path(id): Path<i32>) -> App
 }
 
 /// Create a new part.
+#[utoipa::path(
+    post,
+    path = "/api/parts",
+    tag = "parts",
+    request_body = CreatePart,
+    responses(
+        (status = 201, description = "Part created", body = Part),
+        (status = 400, description = "Invalid input")
+    )
+)]
 pub async fn create_part(
     State(state): State<AppState>,
     Json(payload): Json<CreatePart>,
@@ -130,6 +177,19 @@ pub async fn create_part(
 }
 
 /// Update an existing part.
+#[utoipa::path(
+    patch,
+    path = "/api/parts/{id}",
+    tag = "parts",
+    params(
+        ("id" = i32, Path, description = "Part ID")
+    ),
+    request_body = UpdatePart,
+    responses(
+        (status = 200, description = "Part updated", body = Part),
+        (status = 404, description = "Part not found")
+    )
+)]
 pub async fn update_part(
     State(state): State<AppState>,
     Path(id): Path<i32>,
@@ -177,6 +237,18 @@ pub async fn update_part(
 }
 
 /// Delete a part.
+#[utoipa::path(
+    delete,
+    path = "/api/parts/{id}",
+    tag = "parts",
+    params(
+        ("id" = i32, Path, description = "Part ID")
+    ),
+    responses(
+        (status = 204, description = "Part deleted"),
+        (status = 404, description = "Part not found")
+    )
+)]
 pub async fn delete_part(
     State(state): State<AppState>,
     Path(id): Path<i32>,
@@ -198,6 +270,15 @@ pub async fn delete_part(
 // ============================================================================
 
 /// List all categories with pagination.
+#[utoipa::path(
+    get,
+    path = "/api/categories",
+    tag = "categories",
+    params(PaginationParams),
+    responses(
+        (status = 200, description = "List of categories", body = PaginatedResponse<Category>)
+    )
+)]
 pub async fn list_categories(
     State(state): State<AppState>,
     Query(params): Query<PaginationParams>,
@@ -233,6 +314,18 @@ pub async fn list_categories(
 }
 
 /// Get a single category by ID.
+#[utoipa::path(
+    get,
+    path = "/api/categories/{id}",
+    tag = "categories",
+    params(
+        ("id" = i32, Path, description = "Category ID")
+    ),
+    responses(
+        (status = 200, description = "Category details", body = Category),
+        (status = 404, description = "Category not found")
+    )
+)]
 pub async fn get_category(
     State(state): State<AppState>,
     Path(id): Path<i32>,
@@ -256,6 +349,16 @@ pub async fn get_category(
 }
 
 /// Create a new category.
+#[utoipa::path(
+    post,
+    path = "/api/categories",
+    tag = "categories",
+    request_body = CreateCategory,
+    responses(
+        (status = 201, description = "Category created", body = Category),
+        (status = 400, description = "Invalid input")
+    )
+)]
 pub async fn create_category(
     State(state): State<AppState>,
     Json(payload): Json<CreateCategory>,
@@ -285,6 +388,19 @@ pub async fn create_category(
 }
 
 /// Update an existing category.
+#[utoipa::path(
+    patch,
+    path = "/api/categories/{id}",
+    tag = "categories",
+    params(
+        ("id" = i32, Path, description = "Category ID")
+    ),
+    request_body = UpdateCategory,
+    responses(
+        (status = 200, description = "Category updated", body = Category),
+        (status = 404, description = "Category not found")
+    )
+)]
 pub async fn update_category(
     State(state): State<AppState>,
     Path(id): Path<i32>,
@@ -323,6 +439,18 @@ pub async fn update_category(
 }
 
 /// Delete a category.
+#[utoipa::path(
+    delete,
+    path = "/api/categories/{id}",
+    tag = "categories",
+    params(
+        ("id" = i32, Path, description = "Category ID")
+    ),
+    responses(
+        (status = 204, description = "Category deleted"),
+        (status = 404, description = "Category not found")
+    )
+)]
 pub async fn delete_category(
     State(state): State<AppState>,
     Path(id): Path<i32>,
@@ -347,6 +475,15 @@ pub async fn delete_category(
 // ============================================================================
 
 /// List all footprints with pagination.
+#[utoipa::path(
+    get,
+    path = "/api/footprints",
+    tag = "footprints",
+    params(PaginationParams),
+    responses(
+        (status = 200, description = "List of footprints", body = PaginatedResponse<Footprint>)
+    )
+)]
 pub async fn list_footprints(
     State(state): State<AppState>,
     Query(params): Query<PaginationParams>,
@@ -379,6 +516,18 @@ pub async fn list_footprints(
 }
 
 /// Get a single footprint by ID.
+#[utoipa::path(
+    get,
+    path = "/api/footprints/{id}",
+    tag = "footprints",
+    params(
+        ("id" = i32, Path, description = "Footprint ID")
+    ),
+    responses(
+        (status = 200, description = "Footprint details", body = Footprint),
+        (status = 404, description = "Footprint not found")
+    )
+)]
 pub async fn get_footprint(
     State(state): State<AppState>,
     Path(id): Path<i32>,
@@ -403,6 +552,15 @@ pub async fn get_footprint(
 // ============================================================================
 
 /// List all manufacturers with pagination.
+#[utoipa::path(
+    get,
+    path = "/api/manufacturers",
+    tag = "manufacturers",
+    params(PaginationParams),
+    responses(
+        (status = 200, description = "List of manufacturers", body = PaginatedResponse<Manufacturer>)
+    )
+)]
 pub async fn list_manufacturers(
     State(state): State<AppState>,
     Query(params): Query<PaginationParams>,
@@ -436,6 +594,18 @@ pub async fn list_manufacturers(
 }
 
 /// Get a single manufacturer by ID.
+#[utoipa::path(
+    get,
+    path = "/api/manufacturers/{id}",
+    tag = "manufacturers",
+    params(
+        ("id" = i32, Path, description = "Manufacturer ID")
+    ),
+    responses(
+        (status = 200, description = "Manufacturer details", body = Manufacturer),
+        (status = 404, description = "Manufacturer not found")
+    )
+)]
 pub async fn get_manufacturer(
     State(state): State<AppState>,
     Path(id): Path<i32>,
@@ -461,6 +631,15 @@ pub async fn get_manufacturer(
 // ============================================================================
 
 /// List all storage locations with pagination.
+#[utoipa::path(
+    get,
+    path = "/api/storage_locations",
+    tag = "storage",
+    params(PaginationParams),
+    responses(
+        (status = 200, description = "List of storage locations", body = PaginatedResponse<StorageLocation>)
+    )
+)]
 pub async fn list_storage_locations(
     State(state): State<AppState>,
     Query(params): Query<PaginationParams>,
@@ -493,6 +672,18 @@ pub async fn list_storage_locations(
 }
 
 /// Get a single storage location by ID.
+#[utoipa::path(
+    get,
+    path = "/api/storage_locations/{id}",
+    tag = "storage",
+    params(
+        ("id" = i32, Path, description = "Storage location ID")
+    ),
+    responses(
+        (status = 200, description = "Storage location details", body = StorageLocation),
+        (status = 404, description = "Storage location not found")
+    )
+)]
 pub async fn get_storage_location(
     State(state): State<AppState>,
     Path(id): Path<i32>,
@@ -517,6 +708,15 @@ pub async fn get_storage_location(
 // ============================================================================
 
 /// List all suppliers with pagination.
+#[utoipa::path(
+    get,
+    path = "/api/suppliers",
+    tag = "suppliers",
+    params(PaginationParams),
+    responses(
+        (status = 200, description = "List of suppliers", body = PaginatedResponse<Supplier>)
+    )
+)]
 pub async fn list_suppliers(
     State(state): State<AppState>,
     Query(params): Query<PaginationParams>,
@@ -550,6 +750,18 @@ pub async fn list_suppliers(
 }
 
 /// Get a single supplier by ID.
+#[utoipa::path(
+    get,
+    path = "/api/suppliers/{id}",
+    tag = "suppliers",
+    params(
+        ("id" = i32, Path, description = "Supplier ID")
+    ),
+    responses(
+        (status = 200, description = "Supplier details", body = Supplier),
+        (status = 404, description = "Supplier not found")
+    )
+)]
 pub async fn get_supplier(
     State(state): State<AppState>,
     Path(id): Path<i32>,
@@ -575,6 +787,15 @@ pub async fn get_supplier(
 // ============================================================================
 
 /// List all users with pagination.
+#[utoipa::path(
+    get,
+    path = "/api/users",
+    tag = "users",
+    params(PaginationParams),
+    responses(
+        (status = 200, description = "List of users", body = PaginatedResponse<User>)
+    )
+)]
 pub async fn list_users(
     State(state): State<AppState>,
     Query(params): Query<PaginationParams>,
@@ -609,6 +830,18 @@ pub async fn list_users(
 }
 
 /// Get a single user by ID.
+#[utoipa::path(
+    get,
+    path = "/api/users/{id}",
+    tag = "users",
+    params(
+        ("id" = i32, Path, description = "User ID")
+    ),
+    responses(
+        (status = 200, description = "User details", body = User),
+        (status = 404, description = "User not found")
+    )
+)]
 pub async fn get_user(State(state): State<AppState>, Path(id): Path<i32>) -> AppResult<Json<User>> {
     // Note: We use NULL as password to avoid exposing sensitive data
     let user = sqlx::query_as::<_, User>(

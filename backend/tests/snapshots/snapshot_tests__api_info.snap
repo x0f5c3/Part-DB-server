@@ -1,0 +1,9 @@
+---
+source: backend/tests/snapshot_tests.rs
+expression: api_info
+---
+{
+  "description": "REST API for Part-DB inventory management",
+  "name": "Part-DB API",
+  "version": "2.0.0"
+}
