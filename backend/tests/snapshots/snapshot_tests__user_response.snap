@@ -1,0 +1,15 @@
+---
+source: backend/tests/snapshot_tests.rs
+expression: user
+---
+{
+  "config_theme": "dark",
+  "datetime_added": "2024-01-01T00:00:00Z",
+  "disabled": false,
+  "email": "admin@example.com",
+  "first_name": "Admin",
+  "id": 1,
+  "last_modified": "2024-01-01T00:00:00Z",
+  "last_name": "User",
+  "name": "admin"
+}

@@ -1,0 +1,8 @@
+---
+source: backend/tests/snapshot_tests.rs
+expression: login_request
+---
+{
+  "password": "secret123",
+  "username": "admin"
+}

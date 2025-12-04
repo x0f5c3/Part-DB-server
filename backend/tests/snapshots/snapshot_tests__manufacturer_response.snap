@@ -1,0 +1,17 @@
+---
+source: backend/tests/snapshot_tests.rs
+expression: manufacturer
+---
+{
+  "address": "Dallas, TX, USA",
+  "comment": "Major semiconductor manufacturer",
+  "datetime_added": "2024-01-01T00:00:00Z",
+  "email_address": "support@ti.com",
+  "fax_number": "",
+  "id": 1,
+  "last_modified": "2024-01-01T00:00:00Z",
+  "name": "Texas Instruments",
+  "parent_id": null,
+  "phone_number": "+1-800-336-5236",
+  "website": "https://www.ti.com"
+}

@@ -1,0 +1,8 @@
+---
+source: backend/tests/snapshot_tests.rs
+expression: update_part
+---
+{
+  "favorite": true,
+  "name": "Updated Resistor"
+}
