@@ -1,0 +1,35 @@
+[book]
+authors = ["Part-DB Contributors"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Part-DB Documentation"
+description = "Documentation for Part-DB - Open source inventory management system for electronic components"
+
+[build]
+build-dir = "book"
+create-missing = true
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "navy"
+git-repository-url = "https://github.com/x0f5c3/Part-DB-server"
+edit-url-template = "https://github.com/x0f5c3/Part-DB-server/edit/master/docs/{path}"
+site-url = "/Part-DB-server/"
+cname = ""
+
+[output.html.search]
+enable = true
+limit-results = 30
+teaser-word-count = 30
+use-hierarchical-headings = true
+use-boolean-and = true
+boost-title = 2
+boost-hierarchy = 1
+boost-paragraph = 1
+expand = true
+heading-split-level = 3
+
+[output.html.fold]
+enable = false
+level = 0
