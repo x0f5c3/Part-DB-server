@@ -44,3 +44,12 @@ Generate Rust-compatible migration files:
 - document inferred decisions
 - generate tests asserting schema consistency
 - hand results to rust-backend-agent
+## Documentation Updates
+
+**Before completing any session, update the mdbook documentation (`docs/`):**
+
+- Update `docs/src/architecture/database-models.md` for schema changes
+- Document table structures, relationships, and migrations
+- Add changelog entries to `docs/src/changelog.md` (create if not exists)
+
+Document: what schema changes were made, what tables were added/modified, and migration details.

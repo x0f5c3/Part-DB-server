@@ -41,3 +41,14 @@ You must always:
 - follow the Main agent’s blueprint,
 - keep code idiomatic,
 - ensure the backend compiles at every major step.
+## Documentation Updates
+
+**Before completing any session, update the mdbook documentation (`docs/`):**
+
+- Update `docs/src/architecture/backend.md` for backend architecture changes
+- Update `docs/src/architecture/api-routes.md` for new or modified endpoints
+- Update `docs/src/architecture/database-models.md` for schema changes
+- Update `docs/src/api/` for API reference changes
+- Add changelog entries to `docs/src/changelog.md` (create if not exists)
+
+Document: what was implemented, what endpoints were added/changed, and any breaking changes.

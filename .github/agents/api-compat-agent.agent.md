@@ -36,3 +36,12 @@ Provide:
 
 ### 4. Integration
 Work closely with rust-backend-agent and main-agent to enforce parity before project delivery.
+## Documentation Updates
+
+**Before completing any session, update the mdbook documentation (`docs/`):**
+
+- Update `docs/src/api/` for any API compatibility findings
+- Document endpoint differences and resolution status
+- Add changelog entries to `docs/src/changelog.md` (create if not exists)
+
+Document: what compatibility tests were added, what issues were found, and their resolution status.
