@@ -49,6 +49,8 @@
 - [Migration Status](./migration-status.md)
 - [API Parity Report](./api-parity-report.md)
 - [Legacy Removal Log](./legacy-removal-log.md)
+- [Next Steps](./next-steps.md)
+- [Migration Progress Tracker](./migration-progress.md)
 
 # Changelog
 
