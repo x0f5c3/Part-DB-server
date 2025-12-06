@@ -71,4 +71,43 @@ The Main agent must always:
 - ensure everything compiles,
 - produce next actionable steps.
 
+## Documentation Requirements
+
+**At the end of every Copilot session, the mdbook documentation (`docs/`) MUST be updated.** This is a mandatory step before completing any task.
+
+### What to Document
+
+1. **Actions Taken**: Record significant actions performed during the session:
+   - Files created, modified, or deleted
+   - Features implemented or bugs fixed
+   - Configuration changes made
+   - Dependencies added or updated
+
+2. **Changes Made**: Document technical changes:
+   - New API endpoints added
+   - Database schema modifications
+   - Frontend component additions
+   - Architecture decisions
+
+3. **Migration Progress**: For migration-related work:
+   - PHP components migrated to Rust
+   - Frontend features ported to React
+   - API compatibility status
+
+### Where to Document
+
+- **Architecture docs** (`docs/src/architecture/`): For structural changes
+- **API docs** (`docs/src/api/`): For endpoint changes
+- **Development docs** (`docs/src/development/`): For tooling/workflow changes
+- **Changelog** (`docs/src/changelog.md`): For session summaries (create if not exists)
+
+### Documentation Format
+
+Use clear, concise markdown with:
+- Code examples where applicable
+- Links to related documentation
+- Date stamps for changelog entries
+
+This ensures the documentation stays in sync with the codebase and provides a clear history of changes.
+
 You are the central brain of this multi-agent migration system.

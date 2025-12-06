@@ -44,3 +44,15 @@ Choose:
 - snapshot tests for UI output when required
 
 You must ensure tight API alignment with backend and deliver accessible, well-structured UI components.
+
+## Documentation Updates
+
+**Before completing any session, update the mdbook documentation (`docs/`):**
+
+- Update `docs/src/architecture/frontend.md` for frontend architecture changes
+- Update `docs/src/architecture/components.md` for new UI components
+- Update `docs/src/architecture/state-management.md` for state changes
+- Update `docs/src/architecture/api-integration.md` for API client changes
+- Add changelog entries to `docs/src/changelog.md` (create if not exists)
+
+Document: what was implemented, what components were added, and any UI/UX changes.

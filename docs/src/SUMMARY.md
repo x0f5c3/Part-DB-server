@@ -43,3 +43,7 @@
 
 - [Production Deployment](./deployment/production.md)
 - [GitHub Actions](./deployment/github-actions.md)
+
+# Changelog
+
+- [Changelog](./changelog.md)
