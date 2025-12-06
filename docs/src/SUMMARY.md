@@ -44,6 +44,12 @@
 - [Production Deployment](./deployment/production.md)
 - [GitHub Actions](./deployment/github-actions.md)
 
+# Migration (PHP → Rust + React)
+
+- [Migration Status](./migration-status.md)
+- [API Parity Report](./api-parity-report.md)
+- [Legacy Removal Log](./legacy-removal-log.md)
+
 # Changelog
 
 - [Changelog](./changelog.md)
