@@ -51,6 +51,10 @@ phpstan.neon
 
 .claude/
 CLAUDE.md
+###> rust ###
+backend/target/
+backend/Cargo.lock
+###< rust ###
 target
 
 # Frontend (Next.js)
