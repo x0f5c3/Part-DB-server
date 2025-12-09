@@ -1,0 +1,20 @@
+---
+source: backend/tests/snapshot_tests.rs
+expression: paginated
+---
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Item 1"
+    },
+    {
+      "id": 2,
+      "name": "Item 2"
+    }
+  ],
+  "page": 1,
+  "per_page": 30,
+  "total": 100,
+  "total_pages": 4
+}

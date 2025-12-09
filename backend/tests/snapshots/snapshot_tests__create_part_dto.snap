@@ -1,0 +1,12 @@
+---
+source: backend/tests/snapshot_tests.rs
+expression: create_part
+---
+{
+  "category_id": 1,
+  "comment": "For testing",
+  "description": "Test resistor",
+  "footprint_id": 2,
+  "manufacturer_id": 3,
+  "name": "New Resistor"
+}

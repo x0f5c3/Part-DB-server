@@ -1,0 +1,12 @@
+---
+source: backend/tests/snapshot_tests.rs
+expression: footprint
+---
+{
+  "comment": "Standard 0402 SMD package",
+  "datetime_added": "2024-01-01T00:00:00Z",
+  "id": 1,
+  "last_modified": "2024-01-01T00:00:00Z",
+  "name": "SMD 0402",
+  "parent_id": null
+}

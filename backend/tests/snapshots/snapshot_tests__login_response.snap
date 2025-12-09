@@ -1,0 +1,9 @@
+---
+source: backend/tests/snapshot_tests.rs
+expression: login_response
+---
+{
+  "expires_in": 86400,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token_type": "Bearer"
+}

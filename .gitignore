@@ -55,3 +55,9 @@ CLAUDE.md
 backend/target/
 backend/Cargo.lock
 ###< rust ###
+target
+
+# Frontend (Next.js)
+frontend/.next/
+frontend/out/
+frontend/node_modules/
