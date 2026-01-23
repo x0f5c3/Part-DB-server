@@ -24,6 +24,8 @@ pub struct Category {
     pub partname_hint: String,
     /// Regular expression to validate part names in this category
     pub partname_regex: String,
+    /// Prefix for IPN generation for parts created in this category
+    pub part_ipn_prefix: String,
     /// Whether footprints are disabled for parts in this category
     pub disable_footprints: bool,
     /// Whether manufacturers are disabled for parts in this category
@@ -97,8 +99,18 @@ pub struct StorageLocation {
     pub parent_id: Option<i32>,
     /// Comment or description for this location
     pub comment: String,
-    /// Whether this location can store parts directly
+    /// Whether this location is full (no more space)
     pub is_full: bool,
+    /// Whether only one part type is allowed in this location
+    pub only_single_part: bool,
+    /// Whether only existing parts can have their stock increased
+    pub limit_to_existing_parts: bool,
+    /// ID of the user who owns this storage location (optional)
+    pub id_owner: Option<i32>,
+    /// Whether part lots must have the same owner as the location
+    pub part_owner_must_match: bool,
+    /// ID of the storage type/measurement unit (optional)
+    pub storage_type_id: Option<i32>,
     /// Timestamp when the location was created
     pub datetime_added: Option<DateTime<Utc>>,
     /// Timestamp when the location was last modified
@@ -116,7 +128,7 @@ pub struct Supplier {
     pub parent_id: Option<i32>,
     /// Comment or description for this supplier
     pub comment: String,
-    /// Website URL for the supplier
+    /// Address of the supplier
     pub address: String,
     /// Phone number for the supplier
     pub phone_number: String,
@@ -126,8 +138,10 @@ pub struct Supplier {
     pub email_address: String,
     /// Website URL for the supplier
     pub website: String,
-    /// Shipping costs from this supplier
+    /// Shipping costs from this supplier (note: f64 has precision limitations vs BigDecimal)
     pub shipping_costs: Option<f64>,
+    /// ID of the default currency for this supplier (optional)
+    pub default_currency_id: Option<i32>,
     /// Timestamp when the supplier was created
     pub datetime_added: Option<DateTime<Utc>>,
     /// Timestamp when the supplier was last modified
@@ -155,6 +169,8 @@ pub struct Part {
     pub id_footprint: Option<i32>,
     /// ID of the manufacturer for this part (optional)
     pub id_manufacturer: Option<i32>,
+    /// ID of the measurement unit for this part (optional)
+    pub id_part_unit: Option<i32>,
     /// Internal part number (IPN)
     pub ipn: Option<String>,
     /// Mass of the part in grams
@@ -165,10 +181,14 @@ pub struct Part {
     pub manufacturer_product_number: String,
     /// URL to the manufacturer's product page
     pub manufacturer_product_url: String,
+    /// Manufacturing/production status (announced, active, nrfnd, eol, discontinued)
+    pub manufacturing_status: Option<String>,
     /// Minimum amount of parts that should be in stock
     pub minamount: f64,
     /// Whether this part needs review
     pub needs_review: bool,
+    /// ID of the custom part state (optional)
+    pub id_part_custom_state: Option<i32>,
     /// Timestamp when the part was created
     pub datetime_added: Option<DateTime<Utc>>,
     /// Timestamp when the part was last modified

@@ -105,6 +105,7 @@ async fn test_category_serialization() {
         "comment": "All resistor types",
         "partname_hint": "",
         "partname_regex": "",
+        "part_ipn_prefix": "",
         "disable_footprints": false,
         "disable_manufacturers": false,
         "disable_autodatasheets": false,
