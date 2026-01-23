@@ -1,7 +1,6 @@
 [book]
 authors = ["Part-DB Contributors"]
 language = "en"
-multilingual = false
 src = "src"
 title = "Part-DB Documentation"
 description = "Documentation for Part-DB - Open source inventory management system for electronic components"
@@ -22,7 +21,6 @@ cname = ""
 enable = true
 limit-results = 30
 teaser-word-count = 30
-use-hierarchical-headings = true
 use-boolean-and = true
 boost-title = 2
 boost-hierarchy = 1
