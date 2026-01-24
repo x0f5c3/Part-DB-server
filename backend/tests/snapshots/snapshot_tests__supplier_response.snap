@@ -5,14 +5,14 @@ expression: supplier
 {
   "address": "1000 N Main St, Mansfield, TX",
   "comment": "Major electronics distributor",
-  "datetime_added": "2024-01-01T00:00:00Z",
-  "email_address": "sales@mouser.com",
-  "fax_number": "",
+  "datetimeAdded": "2024-01-01T00:00:00Z",
+  "emailAddress": "sales@mouser.com",
+  "faxNumber": "",
   "id": 1,
-  "last_modified": "2024-01-01T00:00:00Z",
+  "lastModified": "2024-01-01T00:00:00Z",
   "name": "Mouser Electronics",
-  "parent_id": null,
-  "phone_number": "+1-800-346-6873",
-  "shipping_costs": 5.99,
+  "parentId": null,
+  "phoneNumber": "+1-800-346-6873",
+  "shippingCosts": 5.99,
   "website": "https://www.mouser.com"
 }

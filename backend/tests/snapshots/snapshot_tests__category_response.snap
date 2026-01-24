@@ -4,17 +4,17 @@ expression: category
 ---
 {
   "comment": "All types of resistors",
-  "datetime_added": "2024-01-01T00:00:00Z",
-  "default_comment": "",
-  "default_description": "Resistor component",
-  "disable_autodatasheets": false,
-  "disable_footprints": false,
-  "disable_manufacturers": false,
-  "disable_properties": false,
+  "datetimeAdded": "2024-01-01T00:00:00Z",
+  "defaultComment": "",
+  "defaultDescription": "Resistor component",
+  "disableAutodatasheets": false,
+  "disableFootprints": false,
+  "disableManufacturers": false,
+  "disableProperties": false,
   "id": 1,
-  "last_modified": "2024-01-01T00:00:00Z",
+  "lastModified": "2024-01-01T00:00:00Z",
   "name": "Resistors",
-  "parent_id": null,
-  "partname_hint": "R-",
-  "partname_regex": "^R-.*$"
+  "parentId": null,
+  "partnameHint": "R-",
+  "partnameRegex": "^R-.*$"
 }

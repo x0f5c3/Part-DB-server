@@ -5,13 +5,13 @@ expression: manufacturer
 {
   "address": "Dallas, TX, USA",
   "comment": "Major semiconductor manufacturer",
-  "datetime_added": "2024-01-01T00:00:00Z",
-  "email_address": "support@ti.com",
-  "fax_number": "",
+  "datetimeAdded": "2024-01-01T00:00:00Z",
+  "emailAddress": "support@ti.com",
+  "faxNumber": "",
   "id": 1,
-  "last_modified": "2024-01-01T00:00:00Z",
+  "lastModified": "2024-01-01T00:00:00Z",
   "name": "Texas Instruments",
-  "parent_id": null,
-  "phone_number": "+1-800-336-5236",
+  "parentId": null,
+  "phoneNumber": "+1-800-336-5236",
   "website": "https://www.ti.com"
 }

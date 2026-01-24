@@ -41,7 +41,7 @@ async fn test_pagination_params_defaults() {
 async fn test_pagination_params_custom() {
     use backend::models::PaginationParams;
 
-    let json_str = r#"{"page": 5, "per_page": 50}"#;
+    let json_str = r#"{"page": 5, "perPage": 50}"#;
     let params: PaginationParams = serde_json::from_str(json_str).unwrap();
 
     assert_eq!(params.page, 5);
@@ -73,18 +73,18 @@ async fn test_part_serialization() {
         "comment": "",
         "visible": true,
         "favorite": false,
-        "id_category": 1,
-        "id_footprint": null,
-        "id_manufacturer": null,
+        "idCategory": 1,
+        "idFootprint": null,
+        "idManufacturer": null,
         "ipn": null,
         "mass": null,
         "tags": "",
-        "manufacturer_product_number": "",
-        "manufacturer_product_url": "",
+        "manufacturerProductNumber": "",
+        "manufacturerProductUrl": "",
         "minamount": 0.0,
-        "needs_review": false,
-        "datetime_added": null,
-        "last_modified": null
+        "needsReview": false,
+        "datetimeAdded": null,
+        "lastModified": null
     }"#;
 
     let part: Part = serde_json::from_str(part_json).unwrap();
@@ -101,19 +101,19 @@ async fn test_category_serialization() {
     let category_json = r#"{
         "id": 1,
         "name": "Resistors",
-        "parent_id": null,
+        "parentId": null,
         "comment": "All resistor types",
-        "partname_hint": "",
-        "partname_regex": "",
-        "part_ipn_prefix": "",
-        "disable_footprints": false,
-        "disable_manufacturers": false,
-        "disable_autodatasheets": false,
-        "disable_properties": false,
-        "default_description": "",
-        "default_comment": "",
-        "datetime_added": null,
-        "last_modified": null
+        "partnameHint": "",
+        "partnameRegex": "",
+        "partIpnPrefix": "",
+        "disableFootprints": false,
+        "disableManufacturers": false,
+        "disableAutodatasheets": false,
+        "disableProperties": false,
+        "defaultDescription": "",
+        "defaultComment": "",
+        "datetimeAdded": null,
+        "lastModified": null
     }"#;
 
     let category: Category = serde_json::from_str(category_json).unwrap();
@@ -128,7 +128,7 @@ async fn test_create_part_dto() {
 
     let dto_json = r#"{
         "name": "New Part",
-        "category_id": 1
+        "categoryId": 1
     }"#;
 
     let dto: CreatePart = serde_json::from_str(dto_json).unwrap();
