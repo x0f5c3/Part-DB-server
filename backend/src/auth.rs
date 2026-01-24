@@ -31,6 +31,7 @@ pub struct Claims {
 
 /// Login request payload.
 #[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LoginRequest {
     /// Username
     pub username: String,
@@ -40,6 +41,7 @@ pub struct LoginRequest {
 
 /// Login response with JWT token.
 #[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LoginResponse {
     /// JWT access token
     pub token: String,

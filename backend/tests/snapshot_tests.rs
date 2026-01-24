@@ -16,18 +16,18 @@ fn test_part_response_structure() {
         "comment": "Common pull-up resistor",
         "visible": true,
         "favorite": false,
-        "id_category": 5,
-        "id_footprint": 12,
-        "id_manufacturer": 3,
+        "idCategory": 5,
+        "idFootprint": 12,
+        "idManufacturer": 3,
         "ipn": "R-10K-025W",
         "mass": 0.1,
         "tags": "resistor,passive",
-        "manufacturer_product_number": "RC0402FR-0710KL",
-        "manufacturer_product_url": "https://example.com/product",
+        "manufacturerProductNumber": "RC0402FR-0710KL",
+        "manufacturerProductUrl": "https://example.com/product",
         "minamount": 100.0,
-        "needs_review": false,
-        "datetime_added": "2024-01-15T10:30:00Z",
-        "last_modified": "2024-01-20T14:45:00Z"
+        "needsReview": false,
+        "datetimeAdded": "2024-01-15T10:30:00Z",
+        "lastModified": "2024-01-20T14:45:00Z"
     });
 
     assert_json_snapshot!("part_response", part);
@@ -39,18 +39,18 @@ fn test_category_response_structure() {
     let category = json!({
         "id": 1,
         "name": "Resistors",
-        "parent_id": null,
+        "parentId": null,
         "comment": "All types of resistors",
-        "partname_hint": "R-",
-        "partname_regex": "^R-.*$",
-        "disable_footprints": false,
-        "disable_manufacturers": false,
-        "disable_autodatasheets": false,
-        "disable_properties": false,
-        "default_description": "Resistor component",
-        "default_comment": "",
-        "datetime_added": "2024-01-01T00:00:00Z",
-        "last_modified": "2024-01-01T00:00:00Z"
+        "partnameHint": "R-",
+        "partnameRegex": "^R-.*$",
+        "disableFootprints": false,
+        "disableManufacturers": false,
+        "disableAutodatasheets": false,
+        "disableProperties": false,
+        "defaultDescription": "Resistor component",
+        "defaultComment": "",
+        "datetimeAdded": "2024-01-01T00:00:00Z",
+        "lastModified": "2024-01-01T00:00:00Z"
     });
 
     assert_json_snapshot!("category_response", category);
@@ -62,10 +62,10 @@ fn test_footprint_response_structure() {
     let footprint = json!({
         "id": 1,
         "name": "SMD 0402",
-        "parent_id": null,
+        "parentId": null,
         "comment": "Standard 0402 SMD package",
-        "datetime_added": "2024-01-01T00:00:00Z",
-        "last_modified": "2024-01-01T00:00:00Z"
+        "datetimeAdded": "2024-01-01T00:00:00Z",
+        "lastModified": "2024-01-01T00:00:00Z"
     });
 
     assert_json_snapshot!("footprint_response", footprint);
@@ -77,15 +77,15 @@ fn test_manufacturer_response_structure() {
     let manufacturer = json!({
         "id": 1,
         "name": "Texas Instruments",
-        "parent_id": null,
+        "parentId": null,
         "comment": "Major semiconductor manufacturer",
         "address": "Dallas, TX, USA",
-        "phone_number": "+1-800-336-5236",
-        "fax_number": "",
-        "email_address": "support@ti.com",
+        "phoneNumber": "+1-800-336-5236",
+        "faxNumber": "",
+        "emailAddress": "support@ti.com",
         "website": "https://www.ti.com",
-        "datetime_added": "2024-01-01T00:00:00Z",
-        "last_modified": "2024-01-01T00:00:00Z"
+        "datetimeAdded": "2024-01-01T00:00:00Z",
+        "lastModified": "2024-01-01T00:00:00Z"
     });
 
     assert_json_snapshot!("manufacturer_response", manufacturer);
@@ -97,11 +97,11 @@ fn test_storage_location_response_structure() {
     let storage = json!({
         "id": 1,
         "name": "Drawer A1",
-        "parent_id": null,
+        "parentId": null,
         "comment": "Small components storage",
-        "is_full": false,
-        "datetime_added": "2024-01-01T00:00:00Z",
-        "last_modified": "2024-01-01T00:00:00Z"
+        "isFull": false,
+        "datetimeAdded": "2024-01-01T00:00:00Z",
+        "lastModified": "2024-01-01T00:00:00Z"
     });
 
     assert_json_snapshot!("storage_location_response", storage);
@@ -113,16 +113,16 @@ fn test_supplier_response_structure() {
     let supplier = json!({
         "id": 1,
         "name": "Mouser Electronics",
-        "parent_id": null,
+        "parentId": null,
         "comment": "Major electronics distributor",
         "address": "1000 N Main St, Mansfield, TX",
-        "phone_number": "+1-800-346-6873",
-        "fax_number": "",
-        "email_address": "sales@mouser.com",
+        "phoneNumber": "+1-800-346-6873",
+        "faxNumber": "",
+        "emailAddress": "sales@mouser.com",
         "website": "https://www.mouser.com",
-        "shipping_costs": 5.99,
-        "datetime_added": "2024-01-01T00:00:00Z",
-        "last_modified": "2024-01-01T00:00:00Z"
+        "shippingCosts": 5.99,
+        "datetimeAdded": "2024-01-01T00:00:00Z",
+        "lastModified": "2024-01-01T00:00:00Z"
     });
 
     assert_json_snapshot!("supplier_response", supplier);
@@ -134,13 +134,13 @@ fn test_user_response_structure() {
     let user = json!({
         "id": 1,
         "name": "admin",
-        "first_name": "Admin",
-        "last_name": "User",
+        "firstName": "Admin",
+        "lastName": "User",
         "email": "admin@example.com",
         "disabled": false,
-        "config_theme": "dark",
-        "datetime_added": "2024-01-01T00:00:00Z",
-        "last_modified": "2024-01-01T00:00:00Z"
+        "configTheme": "dark",
+        "datetimeAdded": "2024-01-01T00:00:00Z",
+        "lastModified": "2024-01-01T00:00:00Z"
     });
 
     assert_json_snapshot!("user_response", user);
@@ -156,8 +156,8 @@ fn test_paginated_response_structure() {
         ],
         "total": 100,
         "page": 1,
-        "per_page": 30,
-        "total_pages": 4
+        "perPage": 30,
+        "totalPages": 4
     });
 
     assert_json_snapshot!("paginated_response", paginated);
@@ -182,9 +182,9 @@ fn test_create_part_dto_structure() {
         "name": "New Resistor",
         "description": "Test resistor",
         "comment": "For testing",
-        "category_id": 1,
-        "footprint_id": 2,
-        "manufacturer_id": 3
+        "categoryId": 1,
+        "footprintId": 2,
+        "manufacturerId": 3
     });
 
     assert_json_snapshot!("create_part_dto", create_part);
@@ -217,8 +217,8 @@ fn test_login_request_structure() {
 fn test_login_response_structure() {
     let login_response = json!({
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-        "token_type": "Bearer",
-        "expires_in": 86400
+        "tokenType": "Bearer",
+        "expiresIn": 86400
     });
 
     assert_json_snapshot!("login_response", login_response);

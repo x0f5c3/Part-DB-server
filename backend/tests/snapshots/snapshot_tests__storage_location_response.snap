@@ -4,10 +4,10 @@ expression: storage
 ---
 {
   "comment": "Small components storage",
-  "datetime_added": "2024-01-01T00:00:00Z",
+  "datetimeAdded": "2024-01-01T00:00:00Z",
   "id": 1,
-  "is_full": false,
-  "last_modified": "2024-01-01T00:00:00Z",
+  "isFull": false,
+  "lastModified": "2024-01-01T00:00:00Z",
   "name": "Drawer A1",
-  "parent_id": null
+  "parentId": null
 }
