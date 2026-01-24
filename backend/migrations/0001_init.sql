@@ -83,6 +83,42 @@ CREATE INDEX IF NOT EXISTS manufacturer_name ON manufacturers(name);
 CREATE INDEX IF NOT EXISTS manufacturer_idx_parent_name ON manufacturers(parent_id, name);
 
 -- ============================================================================
+-- Measurement Units Table
+-- ============================================================================
+CREATE TABLE IF NOT EXISTS measurement_units (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    unit VARCHAR(50) NOT NULL,
+    is_integer BOOLEAN NOT NULL DEFAULT 0,
+    use_si_prefix BOOLEAN NOT NULL DEFAULT 0,
+    datetime_added DATETIME DEFAULT CURRENT_TIMESTAMP,
+    last_modified DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ============================================================================
+-- Currencies Table
+-- ============================================================================
+CREATE TABLE IF NOT EXISTS currencies (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    iso_code VARCHAR(3) NOT NULL,
+    exchange_rate REAL NOT NULL DEFAULT 1.0,
+    datetime_added DATETIME DEFAULT CURRENT_TIMESTAMP,
+    last_modified DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ============================================================================
+-- Part Custom States Table
+-- ============================================================================
+CREATE TABLE IF NOT EXISTS part_custom_states (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL DEFAULT '',
+    datetime_added DATETIME DEFAULT CURRENT_TIMESTAMP,
+    last_modified DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ============================================================================
 -- Storage Locations Table
 -- ============================================================================
 CREATE TABLE IF NOT EXISTS storelocations (
@@ -189,40 +225,6 @@ CREATE TABLE IF NOT EXISTS part_lots (
 
 CREATE INDEX IF NOT EXISTS part_lots_idx_part ON part_lots(id_part);
 CREATE INDEX IF NOT EXISTS part_lots_idx_storage ON part_lots(id_storage_location);
-
--- ============================================================================
--- Supporting Tables (Referenced by Foreign Keys)
--- ============================================================================
-
--- Measurement Units Table
-CREATE TABLE IF NOT EXISTS measurement_units (
-    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    unit VARCHAR(50) NOT NULL,
-    is_integer BOOLEAN NOT NULL DEFAULT 0,
-    use_si_prefix BOOLEAN NOT NULL DEFAULT 0,
-    datetime_added DATETIME DEFAULT CURRENT_TIMESTAMP,
-    last_modified DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
--- Currencies Table
-CREATE TABLE IF NOT EXISTS currencies (
-    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    iso_code VARCHAR(3) NOT NULL,
-    exchange_rate REAL NOT NULL DEFAULT 1.0,
-    datetime_added DATETIME DEFAULT CURRENT_TIMESTAMP,
-    last_modified DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
--- Part Custom States Table
-CREATE TABLE IF NOT EXISTS part_custom_states (
-    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL DEFAULT '',
-    datetime_added DATETIME DEFAULT CURRENT_TIMESTAMP,
-    last_modified DATETIME DEFAULT CURRENT_TIMESTAMP
-);
 
 -- ============================================================================
 -- Initial Data
