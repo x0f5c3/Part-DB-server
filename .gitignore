@@ -61,3 +61,5 @@ target
 frontend/.next/
 frontend/out/
 frontend/node_modules/
+frontend/package-lock.json
+frontend/tsconfig.tsbuildinfo

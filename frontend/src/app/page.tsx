@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAuthStore } from "@/store/auth";
 
 export default function Home() {
+  const { isAuthenticated, user, signOut } = useAuthStore();
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       {/* Header */}
@@ -21,7 +26,20 @@ export default function Home() {
             <Link href="/storage">
               <Button variant="ghost">Storage</Button>
             </Link>
-            <Button>Login</Button>
+            {isAuthenticated ? (
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-muted-foreground">
+                  {user?.name ?? user?.email}
+                </span>
+                <Button variant="outline" onClick={() => signOut()}>
+                  Sign out
+                </Button>
+              </div>
+            ) : (
+              <Link href="/login">
+                <Button>Sign in</Button>
+              </Link>
+            )}
           </nav>
         </div>
       </header>
@@ -127,3 +145,4 @@ export default function Home() {
     </main>
   );
 }
+
