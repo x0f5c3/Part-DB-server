@@ -1,4 +1,18 @@
-"use client";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { useAuthStore } from "@/store/auth";
+import type { Provider } from "@supabase/supabase-js";
+
+type Mode = "password" | "magic-link";
 
 /**
  * Login page – supports SSO (Google, GitHub), email+password, and magic-link.
@@ -7,19 +21,8 @@
  * OAuth flow the user is redirected back through /auth/callback which
  * finalises the session.
  */
-
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { useAuthStore } from "@/store/auth";
-
-type Mode = "password" | "magic-link";
-
-export default function LoginPage() {
-  const router = useRouter();
+export default function Login() {
+  const navigate = useNavigate();
   const { signInWithPassword, signInWithOAuth, signInWithMagicLink, isLoading, error } =
     useAuthStore();
 
@@ -31,7 +34,7 @@ export default function LoginPage() {
 
   // ── OAuth ───────────────────────────────────────────────────────────────────
 
-  async function handleOAuth(provider: "google" | "github") {
+  async function handleOAuth(provider: Provider) {
     setFormError(null);
     try {
       await signInWithOAuth(provider);
@@ -47,7 +50,7 @@ export default function LoginPage() {
     setFormError(null);
     try {
       await signInWithPassword(email, password);
-      router.replace("/");
+      navigate("/", { replace: true });
     } catch (err) {
       setFormError(err instanceof Error ? err.message : "Sign-in failed");
     }
@@ -62,7 +65,9 @@ export default function LoginPage() {
       await signInWithMagicLink(email);
       setMagicLinkSent(true);
     } catch (err) {
-      setFormError(err instanceof Error ? err.message : "Failed to send magic link");
+      setFormError(
+        err instanceof Error ? err.message : "Failed to send magic link"
+      );
     }
   }
 
@@ -73,7 +78,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md space-y-6">
         {/* Logo */}
         <div className="text-center">
-          <Link href="/" className="inline-block">
+          <Link to="/" className="inline-block">
             <span className="text-3xl font-bold text-primary">Part-DB</span>
           </Link>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -100,7 +105,11 @@ export default function LoginPage() {
                 type="button"
               >
                 {/* Google icon */}
-                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4"
+                  aria-hidden="true"
+                >
                   <path
                     d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                     fill="#4285F4"
@@ -129,7 +138,11 @@ export default function LoginPage() {
                 type="button"
               >
                 {/* GitHub icon */}
-                <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4 fill-current"
+                  aria-hidden="true"
+                >
                   <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
                 </svg>
                 GitHub
@@ -142,7 +155,9 @@ export default function LoginPage() {
                 <span className="w-full border-t" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-card px-2 text-muted-foreground">or continue with</span>
+                <span className="bg-card px-2 text-muted-foreground">
+                  or continue with
+                </span>
               </div>
             </div>
 
@@ -150,7 +165,10 @@ export default function LoginPage() {
             <div className="flex rounded-md border p-1 text-sm">
               <button
                 type="button"
-                onClick={() => { setMode("password"); setFormError(null); }}
+                onClick={() => {
+                  setMode("password");
+                  setFormError(null);
+                }}
                 className={`flex-1 rounded py-1.5 transition-colors ${
                   mode === "password"
                     ? "bg-primary text-primary-foreground"
@@ -161,7 +179,10 @@ export default function LoginPage() {
               </button>
               <button
                 type="button"
-                onClick={() => { setMode("magic-link"); setFormError(null); }}
+                onClick={() => {
+                  setMode("magic-link");
+                  setFormError(null);
+                }}
                 className={`flex-1 rounded py-1.5 transition-colors ${
                   mode === "magic-link"
                     ? "bg-primary text-primary-foreground"

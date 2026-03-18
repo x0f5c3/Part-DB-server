@@ -1,8 +1,12 @@
-"use client";
-
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useAuthStore } from "@/store/auth";
 
 export default function Home() {
@@ -17,13 +21,13 @@ export default function Home() {
             <span className="text-2xl font-bold text-primary">Part-DB</span>
           </div>
           <nav className="flex items-center gap-4">
-            <Link href="/parts">
+            <Link to="/parts">
               <Button variant="ghost">Parts</Button>
             </Link>
-            <Link href="/categories">
+            <Link to="/categories">
               <Button variant="ghost">Categories</Button>
             </Link>
-            <Link href="/storage">
+            <Link to="/storage">
               <Button variant="ghost">Storage</Button>
             </Link>
             {isAuthenticated ? (
@@ -36,7 +40,7 @@ export default function Home() {
                 </Button>
               </div>
             ) : (
-              <Link href="/login">
+              <Link to="/login">
                 <Button>Sign in</Button>
               </Link>
             )}
@@ -53,8 +57,8 @@ export default function Home() {
               Welcome to Part-DB
             </h1>
             <p className="mt-4 text-lg text-muted-foreground">
-              A modern electronic parts inventory management system.
-              Manage your components, track stock levels, and organize your projects.
+              A modern electronic parts inventory management system. Manage your
+              components, track stock levels, and organize your projects.
             </p>
           </div>
 
@@ -68,7 +72,7 @@ export default function Home() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Link href="/parts">
+                <Link to="/parts">
                   <Button className="w-full">View Parts</Button>
                 </Link>
               </CardContent>
@@ -82,7 +86,7 @@ export default function Home() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Link href="/categories">
+                <Link to="/categories">
                   <Button className="w-full">View Categories</Button>
                 </Link>
               </CardContent>
@@ -96,7 +100,7 @@ export default function Home() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Link href="/storage">
+                <Link to="/storage">
                   <Button className="w-full">View Storage</Button>
                 </Link>
               </CardContent>
@@ -107,23 +111,27 @@ export default function Home() {
           <Card>
             <CardHeader>
               <CardTitle>Quick Statistics</CardTitle>
-              <CardDescription>
-                Overview of your inventory
-              </CardDescription>
+              <CardDescription>Overview of your inventory</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid gap-4 md:grid-cols-4">
                 <div className="text-center">
                   <div className="text-3xl font-bold">-</div>
-                  <div className="text-sm text-muted-foreground">Total Parts</div>
+                  <div className="text-sm text-muted-foreground">
+                    Total Parts
+                  </div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold">-</div>
-                  <div className="text-sm text-muted-foreground">Categories</div>
+                  <div className="text-sm text-muted-foreground">
+                    Categories
+                  </div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold">-</div>
-                  <div className="text-sm text-muted-foreground">Storage Locations</div>
+                  <div className="text-sm text-muted-foreground">
+                    Storage Locations
+                  </div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold">-</div>
@@ -145,4 +153,3 @@ export default function Home() {
     </main>
   );
 }
-

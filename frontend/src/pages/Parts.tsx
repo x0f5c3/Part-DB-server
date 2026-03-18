@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -39,26 +39,30 @@ const placeholderParts = [
   },
 ];
 
-export default function PartsPage() {
+export default function Parts() {
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Header */}
       <header className="border-b bg-white dark:bg-slate-950">
         <div className="container flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <span className="text-2xl font-bold text-primary">Part-DB</span>
           </Link>
           <nav className="flex items-center gap-4">
-            <Link href="/parts">
-              <Button variant="ghost" className="bg-accent">Parts</Button>
+            <Link to="/parts">
+              <Button variant="ghost" className="bg-accent">
+                Parts
+              </Button>
             </Link>
-            <Link href="/categories">
+            <Link to="/categories">
               <Button variant="ghost">Categories</Button>
             </Link>
-            <Link href="/storage">
+            <Link to="/storage">
               <Button variant="ghost">Storage</Button>
             </Link>
-            <Button>Login</Button>
+            <Link to="/login">
+              <Button>Login</Button>
+            </Link>
           </nav>
         </div>
       </header>
@@ -81,10 +85,7 @@ export default function PartsPage() {
           <Card>
             <CardContent className="pt-6">
               <div className="flex gap-4">
-                <Input
-                  placeholder="Search parts..."
-                  className="max-w-sm"
-                />
+                <Input placeholder="Search parts..." className="max-w-sm" />
                 <Button variant="outline">Filter</Button>
               </div>
             </CardContent>
@@ -111,18 +112,27 @@ export default function PartsPage() {
                   {placeholderParts.map((part) => (
                     <TableRow key={part.id}>
                       <TableCell className="font-medium">
-                        <Link href={`/parts/${part.id}`} className="hover:underline">
+                        <Link
+                          to={`/parts/${part.id}`}
+                          className="hover:underline"
+                        >
                           {part.name}
                         </Link>
                       </TableCell>
                       <TableCell>{part.description}</TableCell>
                       <TableCell>{part.category}</TableCell>
                       <TableCell>{part.manufacturer}</TableCell>
-                      <TableCell className="text-right">{part.inStock}</TableCell>
+                      <TableCell className="text-right">
+                        {part.inStock}
+                      </TableCell>
                       <TableCell>
                         <div className="flex gap-2">
-                          <Button variant="ghost" size="sm">Edit</Button>
-                          <Button variant="ghost" size="sm">Delete</Button>
+                          <Button variant="ghost" size="sm">
+                            Edit
+                          </Button>
+                          <Button variant="ghost" size="sm">
+                            Delete
+                          </Button>
                         </div>
                       </TableCell>
                     </TableRow>
@@ -134,9 +144,13 @@ export default function PartsPage() {
 
           {/* Pagination */}
           <div className="flex items-center justify-center gap-2">
-            <Button variant="outline" disabled>Previous</Button>
+            <Button variant="outline" disabled>
+              Previous
+            </Button>
             <Button variant="outline">1</Button>
-            <Button variant="outline" disabled>Next</Button>
+            <Button variant="outline" disabled>
+              Next
+            </Button>
           </div>
         </div>
       </div>

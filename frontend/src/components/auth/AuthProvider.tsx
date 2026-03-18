@@ -1,10 +1,8 @@
-"use client";
-
 /**
  * AuthProvider – initialises Supabase auth on first render.
  *
- * Wrap the root layout with this component so every page has access to the
- * latest session via `useAuthStore`.
+ * Wrap the root layout (App.tsx) with this component so every page has
+ * access to the latest session via `useAuthStore`.
  */
 
 import { useEffect } from "react";

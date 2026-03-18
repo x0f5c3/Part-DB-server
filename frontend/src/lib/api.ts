@@ -19,7 +19,7 @@ import type {
   ApiInfo,
 } from "@/types/api";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
 // Re-export types for convenience
 export type { CreatePart, UpdatePart, CreateCategory, UpdateCategory };

@@ -1,31 +1,27 @@
 /**
  * Supabase browser client.
  *
- * This module exports a singleton Supabase client for use in Client Components.
- * Server Components and Route Handlers should use `createServerSupabaseClient`
- * from `@/lib/supabase-server` instead.
+ * Exports a singleton Supabase client for use throughout the application.
  *
  * Required environment variables (set in .env.local):
- *   NEXT_PUBLIC_SUPABASE_URL      – your Supabase project URL
- *   NEXT_PUBLIC_SUPABASE_ANON_KEY – your Supabase project anon/public key
+ *   VITE_SUPABASE_URL      – your Supabase project URL
+ *   VITE_SUPABASE_ANON_KEY – your Supabase project anon/public key
  */
 
-import { createBrowserClient } from "@supabase/ssr";
+import { createClient } from "@supabase/supabase-js";
 
 /**
- * Returns a Supabase client configured for use in browser (client) contexts.
- * Relies on the two public environment variables that are safe to expose to the
- * browser.
+ * Returns a new Supabase client configured with the Vite env vars.
  */
 export function createSupabaseClient() {
-  return createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  return createClient(
+    import.meta.env.VITE_SUPABASE_URL as string,
+    import.meta.env.VITE_SUPABASE_ANON_KEY as string
   );
 }
 
 /**
- * Singleton Supabase browser client for use in Client Components.
+ * Singleton Supabase client for use across the app.
  *
  * @example
  * import { supabase } from "@/lib/supabase";

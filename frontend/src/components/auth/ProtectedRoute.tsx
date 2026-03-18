@@ -1,10 +1,7 @@
-"use client";
-
 /**
  * ProtectedRoute – redirects unauthenticated users to the login page.
  *
  * @example
- * // In a page component:
  * import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
  *
  * export default function DashboardPage() {
@@ -17,7 +14,7 @@
  */
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/auth";
 
 interface ProtectedRouteProps {
@@ -30,14 +27,14 @@ export function ProtectedRoute({
   children,
   redirectTo = "/login",
 }: ProtectedRouteProps) {
-  const router = useRouter();
+  const navigate = useNavigate();
   const { isAuthenticated, isLoading } = useAuthStore();
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.replace(redirectTo);
+      navigate(redirectTo, { replace: true });
     }
-  }, [isAuthenticated, isLoading, redirectTo, router]);
+  }, [isAuthenticated, isLoading, redirectTo, navigate]);
 
   if (isLoading) {
     return (

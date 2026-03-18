@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -27,26 +27,30 @@ const placeholderLocations = [
   },
 ];
 
-export default function StoragePage() {
+export default function Storage() {
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Header */}
       <header className="border-b bg-white dark:bg-slate-950">
         <div className="container flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <span className="text-2xl font-bold text-primary">Part-DB</span>
           </Link>
           <nav className="flex items-center gap-4">
-            <Link href="/parts">
+            <Link to="/parts">
               <Button variant="ghost">Parts</Button>
             </Link>
-            <Link href="/categories">
+            <Link to="/categories">
               <Button variant="ghost">Categories</Button>
             </Link>
-            <Link href="/storage">
-              <Button variant="ghost" className="bg-accent">Storage</Button>
+            <Link to="/storage">
+              <Button variant="ghost" className="bg-accent">
+                Storage
+              </Button>
             </Link>
-            <Button>Login</Button>
+            <Link to="/login">
+              <Button>Login</Button>
+            </Link>
           </nav>
         </div>
       </header>
@@ -57,7 +61,9 @@ export default function StoragePage() {
           {/* Page Header */}
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">Storage Locations</h1>
+              <h1 className="text-3xl font-bold tracking-tight">
+                Storage Locations
+              </h1>
               <p className="text-muted-foreground">
                 Track where your components are stored
               </p>
@@ -68,7 +74,10 @@ export default function StoragePage() {
           {/* Storage Locations Grid */}
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {placeholderLocations.map((location) => (
-              <Card key={location.id} className="hover:shadow-md transition-shadow">
+              <Card
+                key={location.id}
+                className="hover:shadow-md transition-shadow"
+              >
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                     <span>📦 {location.name}</span>
@@ -92,10 +101,14 @@ export default function StoragePage() {
                     ))}
                   </div>
                   <div className="mt-4 flex gap-2">
-                    <Link href={`/storage/${location.id}`}>
-                      <Button variant="outline" size="sm">View Contents</Button>
+                    <Link to={`/storage/${location.id}`}>
+                      <Button variant="outline" size="sm">
+                        View Contents
+                      </Button>
                     </Link>
-                    <Button variant="ghost" size="sm">Edit</Button>
+                    <Button variant="ghost" size="sm">
+                      Edit
+                    </Button>
                   </div>
                 </CardContent>
               </Card>

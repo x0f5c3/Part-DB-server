@@ -59,6 +59,7 @@ target
 
 # Frontend (Next.js)
 frontend/.next/
+frontend/dist/
 frontend/out/
 frontend/node_modules/
 frontend/package-lock.json
