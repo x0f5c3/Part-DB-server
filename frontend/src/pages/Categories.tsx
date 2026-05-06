@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -34,26 +34,30 @@ const placeholderCategories = [
   },
 ];
 
-export default function CategoriesPage() {
+export default function Categories() {
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Header */}
       <header className="border-b bg-white dark:bg-slate-950">
         <div className="container flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <span className="text-2xl font-bold text-primary">Part-DB</span>
           </Link>
           <nav className="flex items-center gap-4">
-            <Link href="/parts">
+            <Link to="/parts">
               <Button variant="ghost">Parts</Button>
             </Link>
-            <Link href="/categories">
-              <Button variant="ghost" className="bg-accent">Categories</Button>
+            <Link to="/categories">
+              <Button variant="ghost" className="bg-accent">
+                Categories
+              </Button>
             </Link>
-            <Link href="/storage">
+            <Link to="/storage">
               <Button variant="ghost">Storage</Button>
             </Link>
-            <Button>Login</Button>
+            <Link to="/login">
+              <Button>Login</Button>
+            </Link>
           </nav>
         </div>
       </header>
@@ -75,7 +79,10 @@ export default function CategoriesPage() {
           {/* Categories Grid */}
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {placeholderCategories.map((category) => (
-              <Card key={category.id} className="hover:shadow-md transition-shadow">
+              <Card
+                key={category.id}
+                className="hover:shadow-md transition-shadow"
+              >
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                     <span>{category.name}</span>
@@ -99,10 +106,14 @@ export default function CategoriesPage() {
                     ))}
                   </div>
                   <div className="mt-4 flex gap-2">
-                    <Link href={`/parts?category=${category.id}`}>
-                      <Button variant="outline" size="sm">View Parts</Button>
+                    <Link to={`/parts?category=${category.id}`}>
+                      <Button variant="outline" size="sm">
+                        View Parts
+                      </Button>
                     </Link>
-                    <Button variant="ghost" size="sm">Edit</Button>
+                    <Button variant="ghost" size="sm">
+                      Edit
+                    </Button>
                   </div>
                 </CardContent>
               </Card>

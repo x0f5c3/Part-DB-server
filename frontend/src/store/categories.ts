@@ -5,7 +5,7 @@
  */
 
 import { create } from "zustand";
-import type { Category, PaginatedResponse, PaginationParams } from "@/types/api";
+import type { Category, PaginationParams } from "@/types/api";
 import * as api from "@/lib/api";
 
 interface CategoriesState {

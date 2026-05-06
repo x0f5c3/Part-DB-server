@@ -5,7 +5,7 @@
  */
 
 import { create } from "zustand";
-import type { Part, PaginatedResponse, PaginationParams } from "@/types/api";
+import type { Part, PaginationParams } from "@/types/api";
 import * as api from "@/lib/api";
 
 interface PartsState {
@@ -41,7 +41,7 @@ interface PartsState {
   clearError: () => void;
 }
 
-export const usePartsStore = create<PartsState>((set, get) => ({
+export const usePartsStore = create<PartsState>((set) => ({
   parts: [],
   selectedPart: null,
   total: 0,
