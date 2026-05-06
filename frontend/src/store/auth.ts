@@ -11,7 +11,7 @@
 
 import { create } from "zustand";
 import type { Session, User as SupabaseUser, Provider } from "@supabase/supabase-js";
-import { createSupabaseClient } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 
 /** Application-level user, mapped from a Supabase auth User object. */
 export interface AppUser {
@@ -44,8 +44,9 @@ interface AuthState {
   /** Last auth error, if any. */
   error: string | null;
 
-  /** Initialise auth state from the current Supabase session. */
-  initialize: () => Promise<void>;
+  /** Initialise auth state from the current Supabase session.
+   *  Returns a cleanup function that unsubscribes the auth listener. */
+  initialize: () => Promise<() => void>;
 
   /** Sign in with email + password. */
   signInWithPassword: (email: string, password: string) => Promise<void>;
@@ -71,7 +72,6 @@ export const useAuthStore = create<AuthState>()((set) => ({
   error: null,
 
   initialize: async () => {
-    const supabase = createSupabaseClient();
     set({ isLoading: true, error: null });
     try {
       const { data: { session } } = await supabase.auth.getSession();
@@ -82,8 +82,8 @@ export const useAuthStore = create<AuthState>()((set) => ({
         isLoading: false,
       });
 
-      // Subscribe to future auth state changes
-      supabase.auth.onAuthStateChange((_event, session) => {
+      // Subscribe to future auth state changes; return unsubscribe for cleanup
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
         set({
           session,
           user: session?.user ? toAppUser(session.user) : null,
@@ -91,16 +91,17 @@ export const useAuthStore = create<AuthState>()((set) => ({
           isLoading: false,
         });
       });
+      return () => subscription.unsubscribe();
     } catch (err) {
       set({
         error: err instanceof Error ? err.message : "Failed to initialise auth",
         isLoading: false,
       });
+      return () => {};
     }
   },
 
   signInWithPassword: async (email, password) => {
-    const supabase = createSupabaseClient();
     set({ isLoading: true, error: null });
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
@@ -116,7 +117,6 @@ export const useAuthStore = create<AuthState>()((set) => ({
   },
 
   signInWithOAuth: async (provider) => {
-    const supabase = createSupabaseClient();
     set({ isLoading: true, error: null });
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
@@ -132,7 +132,6 @@ export const useAuthStore = create<AuthState>()((set) => ({
   },
 
   signInWithMagicLink: async (email) => {
-    const supabase = createSupabaseClient();
     set({ isLoading: true, error: null });
     const { error } = await supabase.auth.signInWithOtp({
       email,
@@ -148,7 +147,6 @@ export const useAuthStore = create<AuthState>()((set) => ({
   },
 
   signOut: async () => {
-    const supabase = createSupabaseClient();
     await supabase.auth.signOut();
     set({ user: null, session: null, isAuthenticated: false, isLoading: false });
   },

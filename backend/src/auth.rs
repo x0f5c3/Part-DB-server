@@ -100,26 +100,40 @@ pub fn generate_token(user_id: i32, username: &str) -> Result<String, AppError> 
     .map_err(|e| AppError::Internal(format!("Failed to generate token: {}", e)))
 }
 
-/// Validate a JWT token and extract claims.
+    /// Validate a JWT token and extract claims.
 ///
 /// Accepts both Supabase-issued JWTs and locally-issued ones by validating
-/// against the shared secret.  Audience validation is relaxed so that both
-/// `"authenticated"` (Supabase) and plain tokens work without extra config.
+/// against the shared secret.  If the token carries an `aud` claim it must
+/// equal `"authenticated"` (the value used by both Supabase and locally-
+/// issued tokens).  Tokens without an `aud` claim are also accepted for
+/// backwards compatibility with legacy self-hosted deployments.
 pub fn validate_token(token: &str) -> Result<Claims, AppError> {
     let secret = get_jwt_secret();
 
     let mut validation = Validation::default();
-    // Accept tokens without an audience claim (locally-issued) as well as
-    // Supabase tokens whose audience is "authenticated".
+    // Disable the built-in audience check so we can handle the two cases
+    // ourselves: Supabase tokens (aud = "authenticated") and legacy tokens
+    // that carry no aud claim at all.
     validation.validate_aud = false;
 
-    decode::<Claims>(
+    let claims = decode::<Claims>(
         token,
         &DecodingKey::from_secret(secret.as_bytes()),
         &validation,
     )
     .map(|data| data.claims)
-    .map_err(|e| AppError::Unauthorized(format!("Invalid token: {}", e)))
+    .map_err(|e| AppError::Unauthorized(format!("Invalid token: {}", e)))?;
+
+    // If an audience claim is present, enforce that it is "authenticated".
+    if let Some(ref aud) = claims.aud {
+        if aud != "authenticated" {
+            return Err(AppError::Unauthorized(
+                "Invalid token audience".to_string(),
+            ));
+        }
+    }
+
+    Ok(claims)
 }
 
 /// Authentication middleware that validates JWT tokens.

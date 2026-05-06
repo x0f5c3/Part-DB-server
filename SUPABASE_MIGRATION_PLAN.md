@@ -115,7 +115,7 @@ cp backend/.env.supabase.example backend/.env
 **Frontend** (`frontend/.env.local`):
 ```bash
 cp frontend/.env.local.example frontend/.env.local
-# Fill in NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY
+# Fill in VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
 ```
 
 ### 5. Run locally
@@ -124,7 +124,7 @@ cp frontend/.env.local.example frontend/.env.local
 # Terminal 1 — Rust backend
 cd backend && cargo run
 
-# Terminal 2 — Next.js frontend
+# Terminal 2 — Vite frontend
 cd frontend && npm install && npm run dev
 ```
 
@@ -266,16 +266,16 @@ The local stack uses the same config as production — no surprises when you dep
 - [x] Database schema validated against PHP entities
 - [x] Parts, Categories, Footprints, Manufacturers, StorageLocations, Suppliers API
 - [x] JWT auth middleware
-- [x] Next.js frontend scaffold with shadcn/ui
+- [x] React + Vite frontend scaffold with shadcn/ui
 
 ### Phase 2: Supabase Integration (This PR ✅)
 - [x] Supabase JWT validation in Rust backend (accepts both Supabase and local JWTs)
 - [x] UUID-based user lookup (Supabase `sub` claim)
-- [x] `@supabase/supabase-js` + `@supabase/ssr` in frontend
+- [x] `@supabase/supabase-js` browser client in React + Vite SPA
 - [x] Supabase browser client (`frontend/src/lib/supabase.ts`)
-- [x] Supabase server client (`frontend/src/lib/supabase-server.ts`)
+- [x] Client-only Supabase architecture (no dedicated frontend server client)
 - [x] SSO login page (Google + GitHub + magic-link + password)
-- [x] OAuth callback route handler
+- [x] OAuth callback handling in frontend auth flow
 - [x] `AuthProvider` for session initialisation
 - [x] `ProtectedRoute` wrapper component
 - [x] Auth-aware navbar on home page

@@ -20,7 +20,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const initialize = useAuthStore((s) => s.initialize);
 
   useEffect(() => {
-    initialize();
+    let cleanup: (() => void) | undefined;
+    initialize().then((unsub) => {
+      cleanup = unsub;
+    });
+    return () => cleanup?.();
   }, [initialize]);
 
   return <>{children}</>;
