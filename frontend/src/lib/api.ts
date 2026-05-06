@@ -19,6 +19,8 @@ import type {
   ApiInfo,
 } from "@/types/api";
 
+import { supabase } from "@/lib/supabase";
+
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
 // Re-export types for convenience
@@ -39,18 +41,11 @@ export class ApiError extends Error {
 }
 
 /**
- * Get the auth token from localStorage.
+ * Get the Supabase access token from the current session.
  */
-function getAuthToken(): string | null {
-  if (typeof window === "undefined") return null;
-  const stored = localStorage.getItem("partdb-auth");
-  if (!stored) return null;
-  try {
-    const parsed = JSON.parse(stored);
-    return parsed.state?.token || null;
-  } catch {
-    return null;
-  }
+async function getAuthToken(): Promise<string | null> {
+  const { data } = await supabase.auth.getSession();
+  return data.session?.access_token ?? null;
 }
 
 /**
@@ -70,7 +65,7 @@ async function fetchApi<T>(
 
   // Add auth token if available and required
   if (requiresAuth) {
-    const token = getAuthToken();
+    const token = await getAuthToken();
     if (token) {
       headers["Authorization"] = `Bearer ${token}`;
     }
